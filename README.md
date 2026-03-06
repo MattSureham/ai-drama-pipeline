@@ -86,6 +86,7 @@ pm.export_for_comfyui()  # 生成 comfyui_prompts.json
 | [🚀 快速开始](SEEDANCE_2.0_GUIDE.md) | 新手 | 5分钟上手Seedance 2.0 |
 | [📖 完整文档](AI_DRAMA_PIPELINE_README.md) | 使用者 | 详细API、配置、故障排除 |
 | [🔧 工作原理](HOW_IT_WORKS.md) | 开发者 | 架构详解、数据流、扩展指南 |
+| [🔑 API获取](API_ACCESS_GUIDE.md) | 所有人 | 如何获取Seedance 2.0 API Key |
 | [💬 Issues](../../issues) | 所有人 | 问题反馈、功能讨论 |
 
 ---
