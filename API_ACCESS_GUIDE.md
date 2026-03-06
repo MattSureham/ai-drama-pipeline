@@ -1,356 +1,256 @@
-# 🔑 如何获取 Seedance 2.0 API 访问权限
+# 🔑 Seedance 2.0 API 获取指南（2026年3月更新）
 
-本文档汇总所有已知的Seedance 2.0 API获取渠道（截至2026年3月）。
-
----
-
-## ⚠️ 重要说明
-
-**Seedance 2.0官方API状态**：ByteDance尚未全面开放官方直接API申请。目前主要通过以下方式访问：
-
-1. **第三方API聚合平台**（推荐，立即可用）
-2. **ByteDance官方产品**（需等待/邀请码）
-3. **开源/社区集成**（技术门槛较高）
+> ⚠️ **重要更新（2026年3月）**：Seedance 2.0 官方API全球发布已延期！目前仅有 Preview/Beta 版本可用。
 
 ---
 
-## 方法一：第三方API平台（推荐 ⭐）
+## 📢 官方发布状态（截至2026年3月）
 
-这些平台已经对接了Seedance 2.0，提供统一API接口。
+| 时间 | 事件 | 状态 |
+|------|------|------|
+| 2026年2月12日 | 中国国内正式发布（Jimeng AI/即梦） | ✅ 已发布 |
+| 2026年2月24日 | 全球API发布计划 | ❌ **已延期** |
+| 2026年3月 | 官方API开放时间 | ⏳ **待定** |
 
-### 1. PiAPI (https://piapi.ai/seedance-2-0)
+### 延期原因
 
-| 项目 | 详情 |
-|------|------|
-| **网址** | https://piapi.ai/seedance-2-0 |
-| **接入方式** | REST API |
-| **特点** | 专门针对Seedance 2.0优化，有免费试用 |
-| **价格** | 按量付费，有免费额度 |
-| **难度** | ⭐ 简单 |
+根据官方消息，Seedance 2.0全球API发布因以下原因推迟：
 
-**接入步骤**：
+1. **好莱坞版权争议** - SAG-AFTRA演员工会抗议版权侵权问题
+2. **监管审查** - 多模态AI内容生成的合规性审查
+3. **技术稳定性** - 全球-scale API架构优化
+
+---
+
+## 🎯 当前可用方案（2026年3月）
+
+### 方案1：Seedance 2.0 Preview（推荐）
+
+**状态**：Beta/Preview版本可用，功能接近完整版
+
+| 平台 | 访问方式 | 功能完整性 | 限制 |
+|------|---------|-----------|------|
+| **PiAPI** | https://piapi.ai/seedance-2-0 | ⭐⭐⭐⭐ 90% | 有速率限制 |
+| **Atlas Cloud** | https://www.atlascloud.ai | ⭐⭐⭐⭐ 85% | 部分功能待开放 |
+| **APIYI** | https://apiyi.com | ⭐⭐⭐ 80% | 中文优化 |
+
+**Preview版 vs 正式版功能对比**：
+
+| 功能 | Preview版 | 正式版（预计） |
+|------|----------|---------------|
+| 文本生成视频 | ✅ 可用 | ✅ 可用 |
+| 图像生成视频 | ✅ 可用 | ✅ 可用 |
+| 多模态输入(9图+3视频+3音频) | ✅ 可用 | ✅ 可用 |
+| 原生音频生成 | ⚠️ 部分可用 | ✅ 完整支持 |
+| 2K分辨率 | ⚠️ 1080p优先 | ✅ 2K可用 |
+| 批量API调用 | ⚠️ 有限制 | ✅ 完整支持 |
+| SLA保障 | ❌ 无 | ✅ 有 |
+
+### 方案2：Seedance 1.5 Pro（稳定版）
+
+**如果你需要稳定的生产环境**：
+
+```
+模型: Seedance 1.5 Pro (而非 2.0)
+特点: 已正式发布，API稳定
+限制: 无多模态音频，单镜头生成
+价格: 较便宜
+推荐: 正式项目先用1.5，等2.0正式发布后升级
+```
+
+**API调用示例**：
 ```bash
-# 1. 注册账号
-https://piapi.ai/signup
-
-# 2. 获取API Key
-Dashboard -> API Keys -> Create New Key
-
-# 3. 调用示例
 curl -X POST https://api.piapi.ai/v1/seedance \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "seedance-2.0-pro",
-    "prompt": "cinematic shot...",
-    "reference_images": ["data:image/jpeg;base64,..."],
-    "duration": 10,
-    "resolution": "2k"
-  }'
-```
-
-**Python SDK**：
-```python
-from piapi import SeedanceClient
-
-client = SeedanceClient(api_key="your-key")
-video_url = client.generate(
-    prompt="cinematic shot...",
-    reference_images=["char1.jpg", "char2.jpg"],
-    duration=10
-)
-```
-
-### 2. Atlas Cloud (https://www.atlascloud.ai)
-
-| 项目 | 详情 |
-|------|------|
-| **网址** | https://www.atlascloud.ai |
-| **特点** | 统一API接入多个模型（Seedance/Sora/Runway等） |
-| **免费额度** | 新用户有免费额度 |
-| **价格** | Pay-as-you-go |
-| **难度** | ⭐ 简单 |
-
-**接入步骤**：
-```bash
-# 1. 注册
-https://www.atlascloud.ai/signup
-
-# 2. 创建API Key
-Settings -> API Keys
-
-# 3. 调用
-curl -X POST https://api.atlascloud.ai/v1/video/generate \
   -H "Authorization: Bearer YOUR_KEY" \
   -d '{
-    "model": "bytedance/seedance-2.0-pro",
-    "prompt": "your prompt",
-    "reference_images": [...]
+    "model": "seedance-1.5-pro",  # 注意是 1.5
+    "prompt": "cinematic shot...",
+    "duration": 5
   }'
 ```
 
-### 3. APIYI (https://apiyi.com)
+### 方案3：官方产品（无API）
 
-| 项目 | 详情 |
-|------|------|
-| **网址** | https://apiyi.com |
-| **特点** | 中文友好，支持批量生成 |
-| **文档** | https://help.apiyi.com/en/seedance-2-api-video-generation-guide-en.html |
-| **难度** | ⭐⭐ 中等（中文文档） |
+| 产品 | 可用性 | 访问方式 |
+|------|-------|---------|
+| **Jimeng AI (即梦)** | ✅ 中国用户 | https://jimeng.jianying.com |
+| **Dreamina (国际版)** | ✅ 海外用户 | https://dreamina.capcut.com |
+| **CapCut Desktop** | ✅ 全球 | App内使用 |
 
----
-
-## 方法二：ByteDance官方渠道
-
-### 1. Dreamina (剪映国际版)
-
-| 项目 | 详情 |
-|------|------|
-| **网址** | https://dreamina.capcut.com |
-| **类型** | Web界面 + 部分API |
-| **特点** | ByteDance官方国际版，最稳定 |
-| **限制** | 主要是Web界面，API能力有限 |
-| **难度** | ⭐ 简单（Web）/ ⭐⭐⭐ 难（API） |
-
-**访问方式**：
-1. 访问 https://dreamina.capcut.com
-2. 注册/登录账号
-3. 在Web界面使用Seedance 2.0
-4. API访问需申请开发者权限（见下文）
-
-### 2. CapCut App
-
-| 项目 | 详情 |
-|------|------|
-| **平台** | iOS / Android / Desktop |
-| **类型** | 移动端App |
-| **特点** | 10亿+用户基础，功能最全 |
-| **限制** | 无直接API，只能手动操作 |
-| **难度** | ⭐ 简单 |
-
-**使用方式**：
-1. 下载CapCut App
-2. 登录账号
-3. 在AI功能中找到Seedance 2.0
-4. 适合：个人创作，不适合批量自动化
-
-### 3. 官方API申请（开发者）
-
-| 项目 | 详情 |
-|------|------|
-| **网址** | https://seed.bytedance.com/en/seedance2_0 |
-| **类型** | 官方直接API |
-| **状态** | 需要申请，审核较严 |
-| **难度** | ⭐⭐⭐⭐ 很难 |
-
-**申请步骤**：
-```
-1. 访问 https://seed.bytedance.com/en/seedance2_0
-2. 点击 "Contact Us" 或 "Join Us"（在页面底部）
-3. 填写申请表，包括：
-   - 公司/个人身份
-   - 使用场景
-   - 预计调用量
-   - 技术团队规模
-4. 等待审核（通常2-4周）
-5. 审核通过后获得API Key
-```
-
-**申请模板**：
-```
-Subject: Seedance 2.0 API Access Application
-
-Dear ByteDance Seed Team,
-
-I am applying for Seedance 2.0 API access for creative video production.
-
-Company/Individual: [Your Name/Company]
-Use Case: AI short drama production pipeline
-Expected Volume: ~100 videos/month
-Technical Setup: Python backend, automated pipeline
-Previous Experience: [Any relevant AI/video experience]
-
-We plan to use Seedance 2.0 for:
-- Character-consistent storytelling
-- Multi-modal video generation
-- Automated short drama production
-
-Please consider our application.
-
-Best regards,
-[Your Name]
-```
+**限制**：
+- 仅有Web/App界面
+- 无程序化API
+- 适合个人创作，不适合批量自动化
 
 ---
 
-## 方法三：Beta测试/邀请码
+## 📅 官方路线图预测
 
-### Chatcut Beta (需邀请码)
+基于目前信息，预计时间表：
 
-| 项目 | 详情 |
-|------|------|
-| **网址** | https://chatcut.com |
-| **类型** | Beta测试 |
-| **要求** | 需要邀请码 |
-| **难度** | ⭐⭐ 中等（需找邀请码） |
+```
+2026年3月    - Preview API持续开放测试
+            - 版权争议解决谈判中
+            
+2026年Q2     - 可能开放官方API Beta申请
+            - 企业用户优先
+            
+2026年Q3     - 预计全面开放API
+            - 完整SLA保障
+            
+2026年Q4     - 功能完善（2K、完整音频等）
+```
 
-**获取邀请码方式**：
-1. 关注ByteDance官方社交媒体账号
-2. 加入相关Discord/Telegram群组
-3. 在Reddit r/generativeAI板块询问
-4. 一些科技博主会分享邀请码
-
-**常见邀请码尝试**（可能已过期，需自行验证）：
-- `SEEDANCE2026`
-- `BYTEBRIDGE`
-- `AIVIDEO2026`
+> ⚠️ **注意**：以上为预测，非官方承诺。实际时间可能变动。
 
 ---
 
-## 方法四：开源/社区方案
+## 🛠️ 当前推荐策略
 
-### ComfyUI集成
+### 场景1：今天就要开始项目
 
-| 项目 | 详情 |
-|------|------|
-| **类型** | 开源工具 |
-| **GitHub** | 搜索 "ComfyUI Seedance" |
-| **特点** | 本地运行，无需API Key |
-| **难度** | ⭐⭐⭐⭐ 技术门槛高 |
-| **要求** | 需要GPU，技术能力强 |
-
-**注意**：社区集成可能不稳定，功能不完整。适合研究，不适合生产环境。
-
----
-
-## 📊 方案对比
-
-| 方案 | 难度 | 成本 | 稳定性 | 适用场景 |
-|------|------|------|--------|---------|
-| **PiAPI** | ⭐ 低 | 按量付费 | ⭐⭐⭐⭐ 高 | 生产环境 |
-| **Atlas Cloud** | ⭐ 低 | 免费额度+付费 | ⭐⭐⭐⭐ 高 | 生产环境 |
-| **Dreamina Web** | ⭐ 低 | 免费/订阅 | ⭐⭐⭐⭐⭐ 最高 | 个人创作 |
-| **官方API申请** | ⭐⭐⭐⭐ 高 | 企业定价 | ⭐⭐⭐⭐⭐ 最高 | 大规模生产 |
-| **Beta邀请码** | ⭐⭐ 中 | 免费 | ⭐⭐⭐ 中等 | 测试/尝鲜 |
-| **ComfyUI开源** | ⭐⭐⭐⭐ 高 | 免费（需GPU） | ⭐⭐ 低 | 研究/学习 |
-
----
-
-## 🚀 推荐路径
-
-### 场景1：快速测试（今天就想用）
 ```
-PiAPI 或 Atlas Cloud → 注册 → 获取API Key → 开始生成
-时间：5分钟
-成本：免费额度足够测试
+推荐方案：
+1. 注册 PiAPI 或 Atlas Cloud 的 Preview 访问
+2. 使用 Seedance 2.0 Preview 开发原型
+3. 同时准备 Seedance 1.5 Pro 作为 fallback
+4. 关注官方发布动态，准备迁移
 ```
 
-### 场景2：正式项目（需要稳定服务）
-```
-1. 先用 PiAPI/Atlas Cloud 开发原型
-2. 同时申请 ByteDance 官方API
-3. 官方通过后再迁移
-时间：开发1周 + 官方审核2-4周
-```
-
-### 场景3：个人创作者（不编程）
-```
-Dreamina Web 或 CapCut App
-直接使用Web界面，无需API
-```
-
----
-
-## 🔧 在Pipeline中使用
-
-以PiAPI为例，修改我们的代码：
-
+**代码适配**：
 ```python
-# ai_drama_pipeline_2026.py 中修改 SeedanceAPI 类
-
 class SeedanceAPI:
-    # 改为第三方API端点
-    API_ENDPOINT = "https://api.piapi.ai/v1/seedance"
-    
-    def __init__(self, api_key: str):
+    def __init__(self, api_key, use_preview=True):
         self.api_key = api_key
-        self.headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
+        # Preview版用第三方端点
+        if use_preview:
+            self.endpoint = "https://api.piapi.ai/v1/seedance"
+            self.model = "seedance-2.0-preview"  # Preview版
+        else:
+            self.endpoint = "https://api.seedance.ai/v1/generations"  # 官方（待开放）
+            self.model = "seedance-2.0-pro"
     
-    def generate_video(self, prompt, reference_images, ...):
+    def generate(self, prompt, **kwargs):
+        # Preview版可能有限制，做兼容处理
         payload = {
-            "model": "seedance-2.0-pro",
+            "model": self.model,
             "prompt": prompt,
-            "reference_images": self._encode_images(reference_images),
-            "duration": duration,
-            "resolution": resolution
+            # Preview版可能不支持所有参数
+            "duration": min(kwargs.get("duration", 5), 10),  # Preview可能限制10秒
+            "resolution": "1080p"  # Preview可能限制1080p
         }
-        
-        response = requests.post(self.API_ENDPOINT, 
-                                headers=self.headers, 
-                                json=payload)
-        return response.json()
+        # ... 调用API
+```
+
+### 场景2：生产环境需要稳定性
+
+```
+推荐方案：
+1. 使用 Seedance 1.5 Pro API（已正式发布）
+2. 牺牲部分2.0的新功能（多模态音频、2K等）
+3. 等待2.0正式版发布后再升级
+4. 或使用 Runway Gen-3 作为替代方案
+```
+
+### 场景3：个人创作/学习
+
+```
+推荐方案：
+1. 直接使用 Dreamina Web 或 CapCut
+2. 体验完整功能，无API限制
+3. 熟悉Seedance特性后再接入API
+```
+
+---
+
+## 🔍 如何获取最新官方信息
+
+### 官方渠道
+
+| 渠道 | 链接 | 更新频率 |
+|------|------|---------|
+| ByteDance Seed官网 | https://seed.bytedance.com/en/seedance2_0 | 产品发布 |
+| 官方博客 | https://seed.bytedance.com/en/blog | 技术文章 |
+| Twitter/X | @ByteDanceSeed | 实时动态 |
+
+### 社区渠道
+
+| 渠道 | 信息类型 |
+|------|---------|
+| Reddit r/generativeAI | 用户讨论、发布时间猜测 |
+| Discord (AI视频生成) | 开发者交流 |
+| PiAPI/Atlas Cloud公告 | Preview版更新 |
+
+---
+
+## ❓ 常见问题
+
+### Q1: Preview版和正式版有什么区别？
+
+**A**: 
+- **功能**: Preview版约85-90%功能，缺少部分高级特性
+- **稳定性**: Preview版无SLA，可能有中断
+- **价格**: Preview版可能有折扣或免费额度
+- **限制**: Preview版有速率限制、生成长度限制
+
+### Q2: 现在接入Preview版，正式版发布后要重写代码吗？
+
+**A**: 大概率不需要大改。建议：
+```python
+# 使用封装层，便于切换
+class SeedanceClient:
+    def __init__(self, version="2.0-preview"):
+        self.version = version
+        # 版本差异内部处理，对外接口统一
     
-    def _encode_images(self, image_paths):
-        """将图片转为base64"""
-        import base64
-        encoded = []
-        for path in image_paths:
-            with open(path, "rb") as f:
-                encoded.append(base64.b64encode(f.read()).decode())
-        return encoded
+    def generate(self, prompt, **kwargs):
+        if self.version == "2.0-preview":
+            # Preview版适配
+            return self._call_preview_api(prompt, **kwargs)
+        else:
+            # 正式版
+            return self._call_official_api(prompt, **kwargs)
 ```
 
----
-
-## ⚠️ 常见问题
-
-### Q1: 第三方平台安全吗？
-
-**A**: PiAPI和Atlas Cloud都是知名AI API聚合平台，有一定信誉。但：
-- 不要在第三方平台存储敏感信息
-- 使用限额度的API Key
-- 生产环境建议使用官方API（如果能申请到）
-
-### Q2: 价格如何？
-
-**A**（大致价格，以实际为准）：
-```
-PiAPI: ~$0.05-0.10 / 秒视频
-Atlas Cloud: ~$0.08-0.15 / 秒视频
-官方API: 企业定价，需询价
-```
-
-### Q3: 有免费额度吗？
+### Q3: 用Preview版有风险吗？
 
 **A**: 
-- PiAPI: 新用户有$5-10免费额度
-- Atlas Cloud: 新用户有免费试用额度
-- Dreamina Web: 每日免费生成次数限制
+- **功能变动风险**: Preview版API可能变动
+- **服务中断风险**: 无SLA保障
+- **数据风险**: 参考图/提示词可能用于模型改进（查看平台隐私政策）
+- **建议**: 仅用于开发测试，生产环境用1.5 Pro或等正式版
 
-### Q4: 中国用户可以访问吗？
+### Q4: 如何第一时间知道正式版发布？
 
 **A**: 
-- PiAPI/Atlas Cloud: 全球可用
-- Dreamina: 国际版，部分地区可能受限
-- 官方API: 企业用户通常无地域限制
+1. Watch GitHub仓库：https://github.com/MattSureham/ai-drama-pipeline
+2. 订阅ByteDance官方邮件列表
+3. 加入PiAPI/Atlas Cloud通知
+4. 关注本文档更新
 
 ---
 
-## 📞 获取更多帮助
+## 📋 2026年3月最终建议
 
-| 渠道 | 链接 |
-|------|------|
-| PiAPI Discord | https://discord.gg/piapi |
-| Atlas Cloud Docs | https://docs.atlascloud.ai |
-| Reddit讨论 | https://reddit.com/r/generativeAI |
-| ByteDance官方 | seed@bytedance.com |
+| 你的情况 | 推荐方案 | 原因 |
+|---------|---------|------|
+| **急需开发/测试** | PiAPI Preview | 立即可用，功能足够 |
+| **生产环境上线** | Seedance 1.5 Pro | 稳定，有SLA |
+| **个人创作** | Dreamina Web | 免费，功能完整 |
+| **企业大客户** | 联系ByteDance直接 | 可能获得早期访问 |
+| **预算有限** | 等官方API开放 | Preview版价格可能较高 |
 
 ---
 
-**推荐下一步**：
-1. 先去 https://piapi.ai 注册，5分钟拿到API Key
-2. 用我们的Pipeline测试生成第一个视频
-3. 同时申请ByteDance官方API（长期方案）
+## 🔗 相关资源
+
+- [官方Seedance页面](https://seed.bytedance.com/en/seedance2_0)
+- [PiAPI Seedance 2.0](https://piapi.ai/seedance-2-0)
+- [Atlas Cloud](https://www.atlascloud.ai)
+- [APIYI指南](https://help.apiyi.com/en/seedance-2-api-delay-seedance-1-5-pro-alternative-en.html)
+
+---
+
+**最后更新**: 2026年3月6日
+
+**状态**: Seedance 2.0 官方API延期中，Preview版可用，正式版发布时间待定。
