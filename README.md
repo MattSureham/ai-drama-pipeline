@@ -15,6 +15,7 @@ AI短剧制作Pipeline工具集 - 支持Seedance 2.0、ComfyUI等多种工作流
 | `comfyui_workflow_generator.py` | ComfyUI批量工作流JSON生成器 | ✅ 配套工具 |
 | `AI_DRAMA_PIPELINE_README.md` | 完整使用文档 | 📖 必读 |
 | `SEEDANCE_2.0_GUIDE.md` | Seedance 2.0快速上手指南 | 🚀 快速开始 |
+| `HOW_IT_WORKS.md` | **工作原理详解** - 架构、流程、示例 | 🔧 深入理解 |
 
 ---
 
@@ -80,9 +81,12 @@ pm.export_for_comfyui()  # 生成 comfyui_prompts.json
 
 ## 📚 文档索引
 
-- [完整文档](AI_DRAMA_PIPELINE_README.md) - 详细使用说明、最佳实践、故障排除
-- [Seedance 2.0指南](SEEDANCE_2.0_GUIDE.md) - 快速上手指南
-- [GitHub Issues](../../issues) - 问题反馈、功能讨论
+| 文档 | 适合人群 | 内容 |
+|------|---------|------|
+| [🚀 快速开始](SEEDANCE_2.0_GUIDE.md) | 新手 | 5分钟上手Seedance 2.0 |
+| [📖 完整文档](AI_DRAMA_PIPELINE_README.md) | 使用者 | 详细API、配置、故障排除 |
+| [🔧 工作原理](HOW_IT_WORKS.md) | 开发者 | 架构详解、数据流、扩展指南 |
+| [💬 Issues](../../issues) | 所有人 | 问题反馈、功能讨论 |
 
 ---
 
